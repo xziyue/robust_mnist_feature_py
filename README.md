@@ -22,3 +22,8 @@ If you would like to run this script on your computer, go to `/dataset` folder a
 - `train_robust_model.py`: trains the robust model
 - `load_mnist.py`: loading data from MNIST idx format (need to correct endianess if the data format has sizes greater than 1 byte)
 - `test_mnist.py`: testing script
+
+## References
+
+- Ilyas, Andrew, et al. "Adversarial examples are not bugs, they are features." *arXiv preprint arXiv:1905.02175* (2019).
+
