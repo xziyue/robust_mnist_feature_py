@@ -1,13 +1,15 @@
 # Extracting Robust Features From MNIST
 
 ## TODOs:
--[x] Implement robust training
--[x] Implement a sufficient amount of perturbation
--[ ] Implement gradient descent for reconstructing features
+- [x] Implement robust training
+
+- [x] Implement a sufficient amount of perturbation
+
+- [ ] Implement gradient descent for reconstructing features
 
 ## Current Problems
 
--[ ] Convergence: the robust model does not seem to converge well (may need to pretrain the model first)
+- [ ] Convergence: the robust model does not seem to converge well (may need to pretrain the model first)
 
 ## The dataset
 
