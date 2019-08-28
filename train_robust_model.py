@@ -19,12 +19,12 @@ tf.enable_eager_execution()
 warnings.filterwarnings(action='ignore', category=FutureWarning)
 
 # train configurations
-batchSize = 256
-numEpochs = 5
+batchSize = 128
+numEpochs = 3
 globalStep = tf.Variable(0)
-learningRate = tf.compat.v1.train.exponential_decay(learning_rate=1.0e-4, global_step=globalStep, decay_steps=50, decay_rate=0.96)
-optimizer = tf.train.GradientDescentOptimizer(learning_rate=learningRate)
-
+learningRate = tf.compat.v1.train.exponential_decay(learning_rate=3.0e-4, global_step=globalStep, decay_steps=200, decay_rate=0.96)
+#optimizer = tf.train.GradientDescentOptimizer(learning_rate=learningRate)
+optimizer = tf.train.AdamOptimizer(learning_rate=learningRate)
 
 # raw data
 print('loading MNIST data...')
@@ -39,13 +39,8 @@ test_YLabel = tf.argmax(test_Y, axis = 1, output_type=tf.int32)
 
 # add perturbation
 print('applying perturbation...')
-pert1 = partial(vertical_lines, numLines=5, lineWidth=1, lineColor=0.3)
-pert2 = partial(horizontal_lines, numLines=5, lineWidth=1, lineColor=0.3)
-pert3 = gaussian_noise
-pert4 = random_removal
-np.random.seed(0x1a2b3c4d)
-pertMan = PerturbationMan(train_X, train_Y, [pert1, pert2, pert3, pert4])
-pertMan.show_content()
+pertMan = PerturbationMan(train_X, train_Y, get_perts())
+#pertMan.show_content()
 pertMan.create_tensor()
 
 
@@ -64,14 +59,17 @@ def get_new_network():
 
     return network
 
-model = get_new_network()
+#model = get_new_network()
+# load std model for training
+model = tf.keras.models.load_model('nn_model/pretrained_model.dat')
+model.load_weights('nn_model/pretrained_model_weights.dat')
 
 # the loss function of parallel networks
 def loss_func(model, x, y):
     y_ = model(x)
     return tf.losses.softmax_cross_entropy(onehot_labels= y, logits=y_, reduction='none')
 
-
+'''
 for epoch in range(numEpochs):
 
     modelAcc = tf.contrib.eager.metrics.Accuracy()
@@ -95,7 +93,7 @@ for epoch in range(numEpochs):
         # stack the loss in rows
         losses = tf.stack(losses, axis = 1)
         # find out the column with the greatest loss
-        greatestLossPos = tf.argmin(losses, axis=1).numpy()
+        greatestLossPos = tf.argmax(losses, axis=1).numpy()
 
         thisBatchSize = batchX.shape[0]
 
@@ -122,6 +120,7 @@ for epoch in range(numEpochs):
 
         print(f'batch {batchInd}/{totalBatches} (epoch: {epoch + 1} / {numEpochs}) acc: {modelAcc.result()}')
 
+'''
 
-model.save('nn_model/robust_model.dat')
-model.save_weights('nn_model/robust_model_weights.dat')
+tf.contrib.saved_model.save_keras_model(model, 'robust_model.dat')
+#model.save_weights('nn_model/robust_model_weights.dat')

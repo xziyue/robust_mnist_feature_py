@@ -1,6 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import multiprocessing
+from functools import partial
+from load_mnist import *
 
 def get_vertical_line_grid(imgShape, numLines, lineWidth, lineColor):
     linePos = np.round(np.linspace(0, imgShape[1] - lineWidth, numLines)).astype(np.int)
@@ -34,7 +36,7 @@ def horizontal_lines(image, numLines, lineWidth, lineColor):
 
 
 def gaussian_noise(image):
-    noise = np.abs(np.random.normal(0.0, 0.2, image.size))
+    noise = np.abs(np.random.normal(0.0, 0.3, image.size))
     noise = noise.reshape(image.shape).astype(image.dtype)
     result = np.clip(image + noise, 0.0, 1.0)
     return result
@@ -43,11 +45,11 @@ def gaussian_noise(image):
 def random_removal(image):
     originalShape = image.shape
     image = image.squeeze()
-    imageContentPos = np.where(image > 0.6)
+    imageContentPos = np.where(image > 0.3)
 
     indices = np.arange(0, imageContentPos[0].size)
     # randomly remove some content
-    numIndicesToRemove = int(np.round(0.1 * indices.size))
+    numIndicesToRemove = int(np.round(0.3 * indices.size))
     indexRemovePos = np.random.randint(0, indices.size - numIndicesToRemove - 1)
 
     result = np.copy(image)
@@ -107,11 +109,11 @@ class PerturbationMan:
         for i in range(len(perts) + 1):
             self.data.append(allPert[:, i, :, :, :])
 
-    def show_content(self, numPerGroup = 1):
+    def show_content(self):
+        fig, ax = plt.subplots(1, self.get_num_groups())
         for i in range(self.get_num_groups()):
-            for j in range(numPerGroup):
-                plt.imshow(self.get_perturbated_data(i)[j, :, :, 0])
-                plt.show()
+            ax[i].imshow(self.get_perturbated_data(i)[0, :, :, 0])
+        plt.show()
 
     def create_tensor(self):
         import tensorflow as tf
@@ -139,3 +141,17 @@ class PerturbationMan:
 
     def get_perturbated_data(self, i):
         return self.data[i]
+
+def get_perts():
+    pert1 = partial(vertical_lines, numLines=5, lineWidth=2, lineColor=0.6)
+    pert2 = partial(horizontal_lines, numLines=7, lineWidth=1, lineColor=0.6)
+    pert3 = gaussian_noise
+    pert4 = random_removal
+    return [pert1, pert2, pert3, pert4]
+
+def get_pertubated_test_data():
+    np.random.seed(0x1a2b3c4d)
+    perts = get_perts()
+    test_X, test_Y = preprocess_mnist_data(*load_mnist_test_XY())
+    pertMan = PerturbationMan(test_X, test_Y, perts)
+    return pertMan
