@@ -27,20 +27,20 @@ model.add(Conv2D(64, (3, 3), activation='relu'))
 model.add(MaxPooling2D((2, 2)))
 model.add(Dropout(0.2))
 model.add(Flatten())
-model.add(Dense(100, activation='relu'))
+model.add(Dense(100, activation='relu', name='FC'))
 model.add(Dropout(0.3))
 model.add(Dense(10, activation='softmax')) # the last layer has 10 perceptrons because there are 10 classes
 
 model.summary()
 
 model.compile(loss = keras.losses.categorical_crossentropy,
-              optimizer=keras.optimizers.sgd(lr=4.0e-4),
+              optimizer=keras.optimizers.sgd(lr=2.0e-4),
               metrics=['accuracy'])
 
 model.fit(train_X, train_Y,
           batch_size=32,
           verbose=1,
-          epochs=2,
+          epochs=3,
           validation_data=(test_X, test_Y))
 
 model.save('./nn_model/pretrained_model.dat')

@@ -19,10 +19,10 @@ tf.enable_eager_execution()
 warnings.filterwarnings(action='ignore', category=FutureWarning)
 
 # train configurations
-batchSize = 128
+batchSize = 256
 numEpochs = 3
 globalStep = tf.Variable(0)
-learningRate = tf.compat.v1.train.exponential_decay(learning_rate=3.0e-4, global_step=globalStep, decay_steps=200, decay_rate=0.96)
+learningRate = tf.compat.v1.train.exponential_decay(learning_rate=5.0e-3, global_step=globalStep, decay_steps=80, decay_rate=0.95)
 #optimizer = tf.train.GradientDescentOptimizer(learning_rate=learningRate)
 optimizer = tf.train.AdamOptimizer(learning_rate=learningRate)
 
@@ -43,7 +43,6 @@ pertMan = PerturbationMan(train_X, train_Y, get_perts())
 #pertMan.show_content()
 pertMan.create_tensor()
 
-
 # the configuration of a new network
 def get_new_network():
     network = tf.keras.Sequential([
@@ -52,24 +51,24 @@ def get_new_network():
         tf.keras.layers.MaxPooling2D((2, 2)),
         tf.keras.layers.Dropout(0.2),
         tf.keras.layers.Flatten(),
-        tf.keras.layers.Dense(100, activation='relu'),
+        tf.keras.layers.Dense(100, activation='relu', name="FC"),
         tf.keras.layers.Dropout(0.3),
         tf.keras.layers.Dense(10) # no activation for the last layer
     ])
 
     return network
 
-#model = get_new_network()
+model = get_new_network()
 # load std model for training
-model = tf.keras.models.load_model('nn_model/pretrained_model.dat')
-model.load_weights('nn_model/pretrained_model_weights.dat')
+#model = tf.keras.models.load_model('nn_model/pretrained_model.dat')
+#model.load_weights('nn_model/pretrained_model_weights.dat')
 
 # the loss function of parallel networks
 def loss_func(model, x, y):
     y_ = model(x)
     return tf.losses.softmax_cross_entropy(onehot_labels= y, logits=y_, reduction='none')
 
-'''
+
 for epoch in range(numEpochs):
 
     modelAcc = tf.contrib.eager.metrics.Accuracy()
@@ -120,7 +119,8 @@ for epoch in range(numEpochs):
 
         print(f'batch {batchInd}/{totalBatches} (epoch: {epoch + 1} / {numEpochs}) acc: {modelAcc.result()}')
 
-'''
 
-tf.contrib.saved_model.save_keras_model(model, 'robust_model.dat')
+
+model.save('nn_model/robust_model.dat')
+#tf.contrib.saved_model.save_keras_model(model, 'robust_model.dat')
 #model.save_weights('nn_model/robust_model_weights.dat')
