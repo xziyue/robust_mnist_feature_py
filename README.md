@@ -37,6 +37,20 @@ of images in the figure.
 |4| 0.727 | 0.950 |
 |5| 0.977 | 0.972 |
 
+## Reconstruction
+
+|Original|Reconstruction (Robust)|Reconstruction (Nonrobust)|
+|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+|![](images/original_0.png)|![](images/robust_recon_0.png)|![](images/nonrobust_recon_0.png)|
+|![](images/original_1.png)|![](images/robust_recon_1.png)|![](images/nonrobust_recon_1.png)|
+|![](images/original_2.png)|![](images/robust_recon_2.png)|![](images/nonrobust_recon_2.png)|
+|![](images/original_3.png)|![](images/robust_recon_3.png)|![](images/nonrobust_recon_3.png)|
+|![](images/original_4.png)|![](images/robust_recon_4.png)|![](images/nonrobust_recon_4.png)|
+|![](images/original_5.png)|![](images/robust_recon_5.png)|![](images/nonrobust_recon_5.png)|
+|![](images/original_6.png)|![](images/robust_recon_6.png)|![](images/nonrobust_recon_6.png)|
+|![](images/original_7.png)|![](images/robust_recon_7.png)|![](images/nonrobust_recon_7.png)|
+|![](images/original_8.png)|![](images/robust_recon_8.png)|![](images/nonrobust_recon_8.png)|
+|![](images/original_9.png)|![](images/robust_recon_9.png)|![](images/nonrobust_recon_9.png)|
 
 ## File description:
 - `perturbation.py`: creates and manages perturbations

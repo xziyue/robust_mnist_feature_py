@@ -54,6 +54,6 @@ def reconstruct_feature(featureId):
         lossDiff = lossVal - lastLoss
         lastLoss = lossVal
 
-        print(lossVal, lossDiff)
+        #print(lossVal, lossDiff)
 
     return start_x.numpy()
