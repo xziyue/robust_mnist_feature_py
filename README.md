@@ -15,6 +15,12 @@
 
 - [ ] Why does horizontal lines hurt accuracy more significantly than vertical lines?
 
+## Goals
+
+- [ ] Is it possible to synthesize "robust" features directly?
+- [ ] Is it possible to differentiate nonrobust and robust features blindly?
+- [ ] Is is possible to create perturbation that leads to human-readable robust features?
+
 ## The dataset
 
 The MNIST datset is available at <http://yann.lecun.com/exdb/mnist/>.
@@ -40,7 +46,7 @@ of images in the figure.
 ## Reconstruction
 
 |Original|Reconstruction (Robust)|Reconstruction (Nonrobust)|
-|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+|:---:|:---:|:---:|
 |![](images/original_0.png)|![](images/robust_recon_0.png)|![](images/nonrobust_recon_0.png)|
 |![](images/original_1.png)|![](images/robust_recon_1.png)|![](images/nonrobust_recon_1.png)|
 |![](images/original_2.png)|![](images/robust_recon_2.png)|![](images/nonrobust_recon_2.png)|

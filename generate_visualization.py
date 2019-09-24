@@ -93,7 +93,7 @@ def generate_markdown_table():
 
     headerStr = ''.join([cellFmt.format(s) for s in headers]) + '|'
     mdLines.append(headerStr)
-    sepStr = sepFmt * len(headerStr) + '|'
+    sepStr = sepFmt * len(headers) + '|'
     mdLines.append(sepStr)
 
     lineFmt = cellFmt * 3 + '|'
