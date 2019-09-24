@@ -7,7 +7,7 @@
 
 - [x] Compare performance of std model and robust model
 
-- [ ] Implement gradient descent for reconstructing features
+- [x] Implement gradient descent for reconstructing features
 
 ## Current Problems
 
