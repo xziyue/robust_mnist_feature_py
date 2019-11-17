@@ -24,6 +24,8 @@ decay = 0.996
 #learningRate = 1.0
 #decay = 1.0
 
+
+
 def reconstruct_feature(featureId):
     x = train_X[featureId : featureId + 1, :, :, :]
     tensor_x = tf.convert_to_tensor(x)

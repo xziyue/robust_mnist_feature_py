@@ -6,11 +6,12 @@ from sklearn.model_selection import train_test_split
 warnings.filterwarnings(action='ignore', category=FutureWarning)
 import pickle
 import tensorflow as tf
+from result_loader import load_robust_output
 
 _, y = preprocess_mnist_data(*load_mnist_train_XY())
-with open('robust_features.bin', 'rb') as infile:
-    data = pickle.load(infile)
-data = np.concatenate(data, axis=0)
+
+data = load_robust_output()
+
 train_X, test_X, train_Y, test_Y = train_test_split(data, y, test_size=0.1)
 
 def get_new_network():
@@ -41,7 +42,7 @@ model.compile(loss = 'categorical_crossentropy',
 model.fit(train_X, train_Y,
           batch_size=32,
           verbose=1,
-          epochs=20,
+          epochs=8,
           validation_data=(test_X, test_Y))
 
 model.save('./nn_model/retrain_robust_model.dat')
