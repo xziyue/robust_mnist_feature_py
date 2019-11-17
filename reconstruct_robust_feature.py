@@ -8,7 +8,7 @@ os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
 tf.enable_eager_execution()
 
 # raw data
-print('loading MNIST data...')
+#print('loading MNIST data...')
 train_X, train_Y = preprocess_mnist_data(*load_mnist_train_XY())
 
 warnings.filterwarnings(action='ignore', category=FutureWarning)
@@ -28,7 +28,17 @@ def reconstruct_feature(featureId):
     x = train_X[featureId : featureId + 1, :, :, :]
     tensor_x = tf.convert_to_tensor(x)
     modelPredictReal = intermediateModel.predict(tensor_x)
-    start_x = np.clip(np.random.normal(0.5, 0.01, x.size), 0, 1).astype(x.dtype).reshape(x.shape)
+
+    # initialize with a random image in the dataset
+    selectId = -1
+    while True:
+        selectId = np.random.randint(0, train_X.shape[0] - 1)
+        if selectId != featureId:
+            break
+    start_x = train_X[selectId : selectId + 1, :, :, :]
+
+    # initialize with random noise
+    #start_x = np.clip(np.random.normal(0.5, 0.01, x.size), 0, 1).astype(x.dtype).reshape(x.shape)
     #start_x = train_X[200 : 200 + 1, :, :, :]
     start_x = tf.convert_to_tensor(start_x)
 
