@@ -23,10 +23,28 @@ def get_new_network():
 
     return network
 
+def get_new_network_1():
+    network = tf.keras.Sequential([
+        tf.keras.layers.Conv2D(16, (3, 3), input_shape=train_X.shape[1:], activation='relu'),
+        tf.keras.layers.Conv2D(32, (3, 3), activation='relu'),
+        tf.keras.layers.MaxPooling2D((2, 2)),
+        tf.keras.layers.Dropout(0.4),
+        tf.keras.layers.Conv2D(64, (3, 3), activation='relu'),
+        tf.keras.layers.MaxPooling2D((3, 3)),
+        tf.keras.layers.Dropout(0.4),
+        tf.keras.layers.Flatten(),
+        tf.keras.layers.Dense(100, activation='relu', name="FC"),
+        tf.keras.layers.Dropout(0.4),
+        tf.keras.layers.Dense(10, activation='softmax') # no activation for the last layer
+    ])
+
+    return network
+
+
 print(train_X.shape)
 print(train_Y.shape)
 
-model = get_new_network()
+model = get_new_network_1()
 
 model.summary()
 
@@ -37,7 +55,7 @@ model.compile(loss = 'categorical_crossentropy',
 model.fit(train_X, train_Y,
           batch_size=32,
           verbose=1,
-          epochs=6,
+          epochs=15,
           validation_data=(test_X, test_Y))
 
-model.save('./nn_model/std_model.dat')
+model.save('./nn_model/std_model_1.dat')

@@ -1,6 +1,7 @@
 from perturbation import *
 import tensorflow as tf
 import warnings
+import matplotlib.pyplot as plt
 
 # forcing tensorflow to use cpu (if there is not enough graphics memory)
 os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
@@ -17,8 +18,11 @@ model = tf.keras.models.load_model('nn_model/robust_model.dat')
 intermediateModel = tf.keras.Model(inputs = model.input, outputs = model.get_layer('FC').output)
 
 
-maxEpoches = 1000
-learningRate = 0.01
+maxEpoches = 100
+learningRate = 1.0
+decay = 0.996
+#learningRate = 1.0
+#decay = 1.0
 
 def reconstruct_feature(featureId):
     x = train_X[featureId : featureId + 1, :, :, :]
@@ -32,7 +36,7 @@ def reconstruct_feature(featureId):
     lossDiff = 1.0e6
 
     for epoch in range(maxEpoches):
-        if abs(lossDiff) < 0.0001:
+        if abs(lossDiff) < 0.001:
             break
 
         with tf.GradientTape() as tape:
@@ -45,7 +49,7 @@ def reconstruct_feature(featureId):
         gradient = tf.math.divide(gradient, gradientNorm)
 
         # apply the gradient
-        start_x = tf.math.subtract(start_x, tf.math.multiply(gradient, learningRate))
+        start_x = tf.math.subtract(start_x, tf.math.multiply(gradient, learningRate * (decay ** epoch)))
         # clip to 0, 1
         start_x = tf.clip_by_value(start_x, 0.0, 1.0)
 

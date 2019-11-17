@@ -1,6 +1,9 @@
-# Extracting Robust Features From MNIST
+# Analyzing Robust Features From MNIST
+
+website: <https://github.com/xziyue/robust_mnist_feature_py>
 
 ## TODOs:
+
 - [x] Implement robust training
 
 - [x] Implement a sufficient amount of perturbation
