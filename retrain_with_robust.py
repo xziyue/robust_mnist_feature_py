@@ -6,11 +6,14 @@ from sklearn.model_selection import train_test_split
 warnings.filterwarnings(action='ignore', category=FutureWarning)
 import pickle
 import tensorflow as tf
-from result_loader import load_robust_output
+from result_loader import load_robust_output, load_nonrobust_output
 
 _, y = preprocess_mnist_data(*load_mnist_train_XY())
 
-data = load_robust_output()
+#data = load_robust_output()
+#data = load_nonrobust_output()
+with open('robust_dim_rec.bin', 'rb') as infile:
+    data = pickle.load(infile)
 
 train_X, test_X, train_Y, test_Y = train_test_split(data, y, test_size=0.1)
 
@@ -45,4 +48,4 @@ model.fit(train_X, train_Y,
           epochs=8,
           validation_data=(test_X, test_Y))
 
-model.save('./nn_model/retrain_robust_model.dat')
+model.save('./nn_model/retrain_robust_dimrec.dat')

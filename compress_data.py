@@ -3,20 +3,16 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os
 from load_mnist import load_mnist_train_XY
+from result_loader import load_robust_output, load_nonrobust_output
 
 
+data = load_nonrobust_output()
 
-with open('robust_features.bin', 'rb') as infile:
-    data = pickle.load(infile)
-
-data = np.concatenate(data, axis=0)
-
-saveDir = 'robust'
+saveDir = 'nonrobust'
 
 # split the data into 10 segments
 seg = 10
 samplePerSeg = data.shape[0] // seg
-
 
 for i in range(seg):
     left = i * samplePerSeg

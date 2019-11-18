@@ -46,7 +46,19 @@ of images in the figure.
 |4| 0.727 | 0.950 |
 |5| 0.977 | 0.972 |
 
+Running standard training over reconstructed datasets:
+
+| Group Id | Robust Accuracy | Nonrobust Accuracy|
+|:---:|:---:|:---:|
+|1| 0.792 | 0.856 |
+|2| 0.822 | 0.434 |
+|3| 0.908 | 0.865 |
+|4| 0.876 | 0.657 |
+|5| 0.960 | 0.954 |
+
 ## Reconstruction
+
+The reconstructed features can be downloaded from this [repo](https://github.com/xziyue/MNIST_Features).
 
 |Original|Reconstruction (Robust)|Reconstruction (Nonrobust)|
 |:---:|:---:|:---:|
@@ -60,6 +72,21 @@ of images in the figure.
 |![](images/original_7.png)|![](images/robust_recon_7.png)|![](images/nonrobust_recon_7.png)|
 |![](images/original_8.png)|![](images/robust_recon_8.png)|![](images/nonrobust_recon_8.png)|
 |![](images/original_9.png)|![](images/robust_recon_9.png)|![](images/nonrobust_recon_9.png)|
+
+## Dim Rec on Robust Features
+
+|Robust Features|Dim Reduced Robust Features|
+|:---:|:---:|
+|![](images/robust_recon_0.png)|![](images/robust_recon_dimrec_0.png)|
+|![](images/robust_recon_1.png)|![](images/robust_recon_dimrec_1.png)|
+|![](images/robust_recon_2.png)|![](images/robust_recon_dimrec_2.png)|
+|![](images/robust_recon_3.png)|![](images/robust_recon_dimrec_3.png)|
+|![](images/robust_recon_4.png)|![](images/robust_recon_dimrec_4.png)|
+|![](images/robust_recon_5.png)|![](images/robust_recon_dimrec_5.png)|
+|![](images/robust_recon_6.png)|![](images/robust_recon_dimrec_6.png)|
+|![](images/robust_recon_7.png)|![](images/robust_recon_dimrec_7.png)|
+|![](images/robust_recon_8.png)|![](images/robust_recon_dimrec_8.png)|
+|![](images/robust_recon_9.png)|![](images/robust_recon_dimrec_9.png)|
 
 ## File description:
 - `perturbation.py`: creates and manages perturbations

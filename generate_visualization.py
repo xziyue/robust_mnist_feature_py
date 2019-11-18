@@ -1,10 +1,10 @@
 from reconstruct_robust_feature import train_X, train_Y
-from reconstruct_robust_feature import reconstruct_feature as recon_robust
-from reconstruct_nonrobust_feature import reconstruct_feature as recon_nonrobust
 import numpy as np
 import skimage
+from result_loader import load_robust_output, load_nonrobust_output
 import matplotlib.pyplot as plt
 from PIL import Image
+import pickle
 
 
 label_Y = np.argmax(train_Y, axis=1)
@@ -60,17 +60,38 @@ def generate_original_visualization(imgGridSize, digit):
 
     return newImg
 
+
+robustOutput = load_robust_output()
+nonrobustOutput = load_nonrobust_output()
+
+with open('robust_dim_rec.bin', 'rb') as infile:
+    robustDimRecOutput = pickle.load(infile)
+
+def get_robust(ind):
+    return robustOutput[ind:ind+1, :, :, :]
+
+def get_nonrobust(ind):
+    return nonrobustOutput[ind:ind+1, :, :, :]
+
+def get_robust_dim_rec(ind):
+    return robustDimRecOutput[ind:ind+1, :, :, :]
+
 def generate_robust_images():
     outputPath = 'images/robust_recon_{}.png'
     for i in range(10):
-        img = generate_visualization((5, 5), i, recon_robust)
+        img = generate_visualization((5, 5), i, get_robust)
         img.save(outputPath.format(i))
 
+def generate_robust_dimrec_images():
+    outputPath = 'images/robust_recon_dimrec_{}.png'
+    for i in range(10):
+        img = generate_visualization((5, 5), i, get_robust_dim_rec)
+        img.save(outputPath.format(i))
 
 def generate_nonrobust_images():
     outputPath = 'images/nonrobust_recon_{}.png'
     for i in range(10):
-        img = generate_visualization((5, 5), i, recon_nonrobust)
+        img = generate_visualization((5, 5), i, get_nonrobust)
         img.save(outputPath.format(i))
 
 def generate_original_images():
@@ -79,7 +100,7 @@ def generate_original_images():
         img = generate_original_visualization((5, 5), i)
         img.save(outputPath.format(i))
 
-def generate_markdown_table():
+def generate_markdown_table_1():
     originals = ['images/original_{}.png'.format(i) for i in range(10)]
     robusts = ['images/robust_recon_{}.png'.format(i) for i in range(10)]
     nonrobusts = ['images/nonrobust_recon_{}.png'.format(i) for i in range(10)]
@@ -104,4 +125,31 @@ def generate_markdown_table():
 
     print('\n'.join(mdLines))
 
-generate_markdown_table()
+
+def generate_markdown_table_2():
+    robusts = ['images/robust_recon_{}.png'.format(i) for i in range(10)]
+    robust_dimrecs = ['images/robust_recon_dimrec_{}.png'.format(i) for i in range(10)]
+
+    cellFmt = '|{}'
+    sepFmt = '|:---:'
+    imgFmt = '![]({})'
+
+    headers = ['Robust Features', 'Dim Reduced Robust Features']
+    mdLines = []
+
+    headerStr = ''.join([cellFmt.format(s) for s in headers]) + '|'
+    mdLines.append(headerStr)
+    sepStr = sepFmt * len(headers) + '|'
+    mdLines.append(sepStr)
+
+    lineFmt = cellFmt * len(headers) + '|'
+    for i in range(len(robusts)):
+        md_img = lambda x : imgFmt.format(x)
+        lineStr = lineFmt.format(md_img(robusts[i]), md_img(robust_dimrecs[i]))
+        mdLines.append(lineStr)
+
+    print('\n'.join(mdLines))
+
+#generate_robust_dimrec_images()
+#generate_robust_images()
+generate_markdown_table_2()

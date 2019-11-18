@@ -2,8 +2,13 @@ import tensorflow as tf
 from perturbation import *
 from sklearn.metrics import accuracy_score
 
-model = tf.keras.models.load_model('nn_model/retrain_robust_model.dat')
+#model = tf.keras.models.load_model('nn_model/retrain_robust_model.dat')
+#model = tf.keras.models.load_model('nn_model/retrain_nonrobust_model.dat')
 #model = tf.keras.models.load_model('nn_model/std_model_1.dat')
+
+model = tf.keras.models.load_model('./nn_model/retrain_robust_dimrec.dat')
+
+
 '''
 model = keras.models.load_model('nn_model/std_model.dat')
 model.load_weights('nn_model/std_model_weights.dat')
