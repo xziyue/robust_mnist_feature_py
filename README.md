@@ -73,29 +73,39 @@ The reconstructed features can be downloaded from this [repo](https://github.com
 |![](images/original_8.png)|![](images/robust_recon_8.png)|![](images/nonrobust_recon_8.png)|
 |![](images/original_9.png)|![](images/robust_recon_9.png)|![](images/nonrobust_recon_9.png)|
 
-## Dim Rec on Robust Features
+## Noise Cancellation on Features
 
-|Robust Features|Dim Reduced Robust Features|
+|Denoised Robust Features|Denoised Nonrobust Features|
 |:---:|:---:|
-|![](images/robust_recon_0.png)|![](images/robust_recon_dimrec_0.png)|
-|![](images/robust_recon_1.png)|![](images/robust_recon_dimrec_1.png)|
-|![](images/robust_recon_2.png)|![](images/robust_recon_dimrec_2.png)|
-|![](images/robust_recon_3.png)|![](images/robust_recon_dimrec_3.png)|
-|![](images/robust_recon_4.png)|![](images/robust_recon_dimrec_4.png)|
-|![](images/robust_recon_5.png)|![](images/robust_recon_dimrec_5.png)|
-|![](images/robust_recon_6.png)|![](images/robust_recon_dimrec_6.png)|
-|![](images/robust_recon_7.png)|![](images/robust_recon_dimrec_7.png)|
-|![](images/robust_recon_8.png)|![](images/robust_recon_dimrec_8.png)|
-|![](images/robust_recon_9.png)|![](images/robust_recon_dimrec_9.png)|
+|![](images/robust_recon_morph_0.png)|![](images/nonrobust_recon_morph_0.png)|
+|![](images/robust_recon_morph_1.png)|![](images/nonrobust_recon_morph_1.png)|
+|![](images/robust_recon_morph_2.png)|![](images/nonrobust_recon_morph_2.png)|
+|![](images/robust_recon_morph_3.png)|![](images/nonrobust_recon_morph_3.png)|
+|![](images/robust_recon_morph_4.png)|![](images/nonrobust_recon_morph_4.png)|
+|![](images/robust_recon_morph_5.png)|![](images/nonrobust_recon_morph_5.png)|
+|![](images/robust_recon_morph_6.png)|![](images/nonrobust_recon_morph_6.png)|
+|![](images/robust_recon_morph_7.png)|![](images/nonrobust_recon_morph_7.png)|
+|![](images/robust_recon_morph_8.png)|![](images/nonrobust_recon_morph_8.png)|
+|![](images/robust_recon_morph_9.png)|![](images/nonrobust_recon_morph_9.png)|
 
 ## File description:
-- `perturbation.py`: creates and manages perturbations
-- `load_mnist.py`: loading data from MNIST idx format (need to correct endianess if the data format has sizes greater than 1 byte)
-- `train_std_model.py`: trains standard model
-- `train_pretrained_model`: trains a pretrain model as initial weights for robust model
-- `train_robust_model.py`: trains the robust model
-- `test_std_model`: tests the performance of std model on adversarial dataset
-- `test_robust_model`: tests the performance of robust model on adversarial dataset
+
+Remember to add the root dir to PYTHONPATH.
+
+*I am doing a bunch of crazy experiments right now, there are many undocumented files in the repo.*
+
+- `util` folder:
+    - `perturbation.py`: creates and manages perturbations
+    - `load_mnist.py`: loading data from MNIST idx format (need to correct endianess if the data format has sizes greater than 1 byte)
+- `train` folder: neural network training scripts
+    - `train_std_model.py`: trains standard model
+    - `train_pretrained_model`: trains a pretrain model as initial weights for robust model
+    - `train_robust_model.py`: trains the robust model
+- `test` folder: test the performance of models
+    - `test_std_model`: tests the performance of std model on adversarial dataset
+    - `test_robust_model`: tests the performance of robust model on adversarial dataset
+- `reconstruct` folder: reconstructing the features from models
+- `misc` folder: some ongoing experiments
 
 
 ## References
